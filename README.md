@@ -12,6 +12,7 @@ Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are s
 
 ## 2026.5.13
 Upload 2 files (simpleLogicOR.py and simpleLogicOR_fixedOutput.py). Here are some of detail about context.
+
 3. simpleLogicOR.py
 
     This file utilizes the annealing algorithm to implement the reversible logic of a 2-input OR gate, and adopts 1000 annealing rounds to verify the convergence state of the OR logic.
