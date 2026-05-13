@@ -15,6 +15,6 @@ Upload 2 files (simpleLogicOR.py and simpleLogicOR_fixedOutput.py). Here are som
 3. simpleLogicOR.py
 
     This file utilizes the annealing algorithm to implement the reversible logic of a 2-input OR gate, and adopts 1000 annealing rounds to verify the convergence state of the OR logic.
-2. simpleLogicOR_fixedOutput.py
+4. simpleLogicOR_fixedOutput.py
 
     This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1.
