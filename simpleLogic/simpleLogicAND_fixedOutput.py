@@ -4,7 +4,10 @@ import collections
 # Information
 # Created by WHH
 # Date: 2026-04-09
-# 
+# Description: AND 可逆逻辑的逆验证
+# 固定输出为0或者1，查看输入状态的分布情况，验证是否符合 AND 门的逻辑约束
+# 修改变量为clamp_val，可以修改为0,1，分别验证输出为0和1的情况，对应自旋节点的物理值为-1和1
+# Result：功能验证正确，输出符合预期的逻辑约束
 
 def verify_inverse_ising(h, j_dict, clamp_node=2, clamp_val=1, num_samples=1000, T=1):
     """
