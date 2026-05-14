@@ -3,7 +3,7 @@ invertible logic verified by python
 
 ## Version Revision Record
 | Version | Date | Modification | Description | Author |
-| :---: | :---: | :---: | :---: | :---: |
+| :---: | :---: | :--- | :--- | :---: |
 | v1.0 | 2026.5.14 | simpleLogicAND.py <br> simpleLogicAND_fixedOutput.py <br> simpleLogicOR.py <br> simpleLogicOR_fixedOutput.py | Upload and organize into the folder *simpleLogic* | WHH |
 
 
