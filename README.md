@@ -40,6 +40,17 @@ Upload 2 files (PuLP_AND.py and PuLP_OR.py). Here are some details about the con
     This file uses linear programming to solve for the coupling coefficients and bias terms of the OR logic gate.
 
 ## 2026.5.14
-Upload 3 files (complexLogicAND3.py, complexLogicAND3_fixedOutput0.py and complexLogicAND3_fixedOutput1.py). Here are some details about the context
+Upload 4 files (PuLP_AND3.py, complexLogicAND3.py, complexLogicAND3_fixedOutput0.py and complexLogicAND3_fixedOutput1.py). Here are some details about the context
 
-7. 
+7. PuLP_AND3.py
+
+    This file uses linear programming to solve for the coupling coefficients and bias terms of the AND logic gate.
+
+8. complexLogicAND3.py
+    This file utilizes the annealing algorithm to implement the reversible logic of a 3-inputs AND gate, and adopts 10000 annealing rounds to verify the convergence state of the 3-inputs AND logic.
+
+9. complexLogicAND3_fixedOutput0.py
+    This file verifies the reversibility of the logic in reverse by fixing the output to 0.
+
+10. complexLogicAND3_fixedOutput1.py
+    This file verifies the reversibility of the logic in reverse by fixing the output to 1.
