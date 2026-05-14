@@ -8,6 +8,8 @@ invertible logic verified by python
 |  | 2026.5.14 | PuLP_AND.py <br> PuLP_OR.py | Upload and organize into the folder *linearProgramming* | WHH |
 |  | 2026.5.14 | PuLP_AND3.py | Upload and organize into the folder *linearProgramming* | WHH |
 |  | 2026.5.14 | complexLogicAND3.py <br> complexLogicAND3_fixedOutput0.py <br> complexLogicAND3_fixedOutput1.py | Upload and organize into the folder *complexLogic* | WHH |
+|  | 2026.5.14 | complexLogicAND3_auxiliaryConnect.py | Upload and organize into the folder *complexLogic* | WHH |
+|  | 2026.5.14 | complexLogicAND3_annealingTrace.py <br> complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py | Upload and organize into the folder *annealingTrace* | WHH |
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some details about context.
@@ -55,3 +57,16 @@ Upload 4 files (PuLP_AND3.py, complexLogicAND3.py, complexLogicAND3_fixedOutput0
 
 10. complexLogicAND3_fixedOutput1.py
     This file verifies the reversibility of the logic in reverse by fixing the output to 1.
+
+## 2026.5.14
+Upload 3 files (complexLogicAND3_auxiliaryConnect.py, complexLogicAND3_annealingTrace.py and complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py). Here are some details about the context
+
+11. complexLogicAND3_auxiliaryConnect.py
+    This file implements the 3-input AND gate through auxiliary bit connection.
+
+12. complexLogicAND3_annealingTrace.py
+    Trace analysis of complexLogicAND3.py.
+
+13. complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py
+    Trace analysis of complexLogicAND3_auxiliaryConnect.py. Something may be wrong in this file
+
