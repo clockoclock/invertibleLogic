@@ -10,6 +10,7 @@ invertible logic verified by python
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some details about context.
+
 1. simpleLogicAND.py
 
     This file utilizes the annealing algorithm to implement the reversible logic of a 2-input AND gate, and adopts 1000 annealing rounds to verify the convergence state of the AND logic.
@@ -29,6 +30,7 @@ Upload 2 files (simpleLogicOR.py and simpleLogicOR_fixedOutput.py). Here are som
 
 ## 2026.5.14
 Upload 2 files (PuLP_AND.py and PuLP_OR.py). Here are some details about the context.
+
 5. PuLP_AND.py
 
     This file uses linear programming to solve for the coupling coefficients and bias terms of the AND logic gate.
@@ -37,3 +39,7 @@ Upload 2 files (PuLP_AND.py and PuLP_OR.py). Here are some details about the con
 
     This file uses linear programming to solve for the coupling coefficients and bias terms of the OR logic gate.
 
+## 2026.5.14
+Upload 3 files (complexLogicAND3.py, complexLogicAND3_fixedOutput0.py and complexLogicAND3_fixedOutput1.py). Here are some details about the context
+
+7. 
