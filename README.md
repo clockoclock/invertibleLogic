@@ -1,11 +1,11 @@
 # invertibleLogic
 invertible logic verified by python
 
-| 逻辑门类型 | 输入 (A, B) | 输出 (Output) | 备注 |
-| :--- | :---: | :---: | ---: |
-| AND Gate | (1, 1) | 1 | 符合预期 |
-| Invertible AND | (0, 1) | 0 | 可逆逻辑验证 |
-| Ising Model | N/A | Stable | 能量最低态 |
+## Version Revision Record
+| Version | Date | Modification | Description | Author |
+| :---: | :---: | :---: | :---: | :---: |
+| v1.0 | 2026.5.14 | simpleLogicAND.py <br> simpleLogicAND_fixedOutput.py <br> simpleLogicOR.py <br> simpleLogicOR_fixedOutput.py | Upload and organize into the folder *simpleLogic* | WHH |
+
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some of detail about context.
@@ -27,4 +27,3 @@ Upload 2 files (simpleLogicOR.py and simpleLogicOR_fixedOutput.py). Here are som
     This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1.
 
 ## 2026.5.14
-Modified the 1~4 files
