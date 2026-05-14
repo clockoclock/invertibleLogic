@@ -50,23 +50,29 @@ Upload 4 files (PuLP_AND3.py, complexLogicAND3.py, complexLogicAND3_fixedOutput0
     This file uses linear programming to solve for the coupling coefficients and bias terms of the AND logic gate.
 
 8. complexLogicAND3.py
+
     This file utilizes the annealing algorithm to implement the reversible logic of a 3-inputs AND gate, and adopts 10000 annealing rounds to verify the convergence state of the 3-inputs AND logic.
 
 9. complexLogicAND3_fixedOutput0.py
+
     This file verifies the reversibility of the logic in reverse by fixing the output to 0.
 
 10. complexLogicAND3_fixedOutput1.py
+
     This file verifies the reversibility of the logic in reverse by fixing the output to 1.
 
 ## 2026.5.14
 Upload 3 files (complexLogicAND3_auxiliaryConnect.py, complexLogicAND3_annealingTrace.py and complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py). Here are some details about the context
 
 11. complexLogicAND3_auxiliaryConnect.py
+
     This file implements the 3-input AND gate through auxiliary bit connection.
 
 12. complexLogicAND3_annealingTrace.py
+
     Trace analysis of complexLogicAND3.py.
 
 13. complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py
+
     Trace analysis of complexLogicAND3_auxiliaryConnect.py. Something may be wrong in this file
 
