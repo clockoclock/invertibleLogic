@@ -5,8 +5,9 @@ invertible logic verified by python
 | Version | Date | Modification | Description | Author |
 | :---: | :---: | :--- | :--- | :---: |
 | v1.0 | 2026.5.14 | simpleLogicAND.py <br> simpleLogicAND_fixedOutput.py <br> simpleLogicOR.py <br> simpleLogicOR_fixedOutput.py | Upload and organize into the folder *simpleLogic* | WHH |
-| V1.0 | 2026.5.14 | PuLP_AND.py <br> PuLP_OR.py | Upload and organize into the folder *linearProgramming* | WHH |
-
+|  | 2026.5.14 | PuLP_AND.py <br> PuLP_OR.py | Upload and organize into the folder *linearProgramming* | WHH |
+|  | 2026.5.14 | PuLP_AND3.py | Upload and organize into the folder *linearProgramming* | WHH |
+|  | 2026.5.14 | complexLogicAND3.py <br> complexLogicAND3_fixedOutput0.py <br> complexLogicAND3_fixedOutput1.py | Upload and organize into the folder *complexLogic* | WHH |
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some details about context.
