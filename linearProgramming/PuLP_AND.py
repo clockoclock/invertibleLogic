@@ -20,7 +20,7 @@ def solve_ising_bipolar(logic_gate='AND', energy_gap=1):
     # 输入端 h[0], h[1]，输出端 h[2]
     h = pulp.LpVariable.dicts("h", range(3), lowBound=-5, upBound=5, cat='Integer')
     # 耦合项 j01 (输入间), j02 (A到C), j12 (B到C)
-    j = pulp.LpVariable.dicts("j", [(0, 1), (0, 2), (1, 2)], lowBound=-5, upBound=5, cat='Integer')
+    j = pulp.LpVariable.dicts("j", [(0, 1), (0, 2), (1, 2)], lowBound=-2, upBound=2, cat='Integer')
     
     # 基态能量偏置
     e_g = pulp.LpVariable("E_ground", lowBound=-20, upBound=20, cat='Continuous')
@@ -37,7 +37,7 @@ def solve_ising_bipolar(logic_gate='AND', energy_gap=1):
                 v0, v1, v2 = (2*s0 - 1), (2*s1 - 1), (2*s2 - 1)
                 
                 # 计算物理能量公式: E = sum(h_i * v_i) + sum(j_ij * v_i * v_j)
-                current_energy = (h[0]*v0 + h[1]*v1 + h[2]*v2 + 
+                current_energy = -(h[0]*v0 + h[1]*v1 + h[2]*v2 + 
                                   j[(0, 1)]*v0*v1 + j[(0, 2)]*v0*v2 + j[(1, 2)]*v1*v2)
                 
                 # 定义 AND 逻辑真值表
@@ -66,7 +66,7 @@ def solve_ising_bipolar(logic_gate='AND', energy_gap=1):
             for s1 in [0, 1]:
                 for s2 in [0, 1]:
                     v = [2*s0-1, 2*s1-1, 2*s2-1]
-                    e = (pulp.value(h[0])*v[0] + pulp.value(h[1])*v[1] + pulp.value(h[2])*v[2] +
+                    e = -(pulp.value(h[0])*v[0] + pulp.value(h[1])*v[1] + pulp.value(h[2])*v[2] +
                          pulp.value(j[(0,1)])*v[0]*v[1] + pulp.value(j[(0,2)])*v[0]*v[2] + 
                          pulp.value(j[(1,2)])*v[1]*v[2])
                     print(f"{s0} {s1} {s2} | {e:.1f} {'*' if s0&s1==s2 else ''}")
