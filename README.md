@@ -76,3 +76,22 @@ Upload 3 files (complexLogicAND3_auxiliaryConnect.py, complexLogicAND3_annealing
 
     Trace analysis of complexLogicAND3_auxiliaryConnect.py. Something may be wrong in this file
 
+## 2026.5.18
+Upload 4 files (complexLogicAND3_compactModel.py, complexLogicAND3_compactModel_hamilitonian.py, complexLogicAND3_compactModel_annealingTrace.py and complexLogicAND3_fixedOutput.py). Here are some details about the context
+
+14. complexLogicAND3_compactModel.py
+
+    This file implements the 3-inputs AND gate through overlap the output of the first AND gate and the input of the second AND gate. And only 5 spins are used in this structure.
+
+15. complexLogicAND3_compactModel_hamilitonian.py
+
+    This file is used to calculate the hamilitionian of proposed structure.
+
+16. complexLogicAND3_compactModel_annealingTrace.py
+
+    Trace analysis of complexLogicAND3_compactModel.py
+
+17. complexLogicAND3_fixedOutput.py
+
+    This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1
+
