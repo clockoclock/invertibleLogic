@@ -1,89 +1,101 @@
 import numpy as np
 import pandas as pd
 
-# Information
+# information
 # Created by: WHH
 # Date: 2026-05-18
-# Description: 计算级联堆叠的 3 输入 AND 逻辑门的 Ising 模型能量景观
-# 该代码实现了一个基于 Ising 模型的能量景观计算器，针对级联堆叠的 3 输入 AND 逻辑门设计。通过定义节点索引、构建耦合矩阵 J 和偏置向量 h，生成所有可能的自旋配置，并计算每个配置的哈密顿量能量。最终输出每个状态的二进制表示和对应的总能量，并自动识别系统的基态（最低能量状态）。用户可以通过分析输出结果来理解系统的能量分布和稳定状态。
-# 注意：该代码依赖于 NumPy 和 Pandas 库，需要提前安装（pip install numpy pandas）才能运行。
-# Result: 功能正常，能够正确计算并展示级联堆叠的 3 输入 AND 逻辑门的能量景观，并且成功识别出系统的基态。
+# Description: 5节点 紧凑型级联 3-input AND 逻辑门的哈密顿量在 m4 空间下的投影计算
 
-# 注意：该哈密顿量计算公式没有取负号
-
-def calculate_ising_energy_landscape():
-    # 1. 定义节点索引映射 (按照矩阵顺序对齐)
-    # 节点: m0, m1, m4, m2, m3
-    # 物理含义假设: m0, m1, m2 为输入; m3 为最终输出; m4 为级联辅助位
-    node_names = ['m0', 'm1', 'm4', 'm2', 'm3']
-    
-    # 2. 严格根据您上传的图片构建 J 矩阵 (对称矩阵)
-    J = np.array([
-        [ 0,  1, -2,  0,  0],  # m0
-        [ 1,  0, -2,  0,  0],  # m1
-        [-2, -2,  0,  1, -2],  # m4
-        [ 0,  0,  1,  0, -2],  # m2
-        [ 0,  0, -2, -2,  0]   # m3
-    ])
-    
-    # 3. 构建 h 偏置向量
+def main():
+    # ==========================================
+    # 1. 配置 5 节点紧凑型级联物理参数
+    # ==========================================
+    # 节点索引对应: 0:m0(In1), 1:m1(In2), 2:m4(Aux), 3:m2(In3), 4:m3(Out)
     h = np.array([-1.0, -1.0, 1.0, -1.0, 2.0])
-    
-    # 4. 生成所有 32 种自旋配置空间 (m_i 属于 {-1, 1})
-    # 采用二进制网格生成，0 映射为 -1，1 映射为 1
-    num_nodes = len(node_names)
-    results = []
-    
-    for idx in range(2**num_nodes):
-        # 提取当前状态的 5 位二进制表示
-        # 为了方便阅读，按标准的二进制高位到低位或固定位序展开
-        # 这里直接通过位运算提取状态
-        s_bits = [(idx >> (num_nodes - 1 - i)) & 1 for i in range(num_nodes)]
-        
-        # 将 [0, 1] 空间转换到 Ising 物理自旋空间 [-1, 1]
-        m = np.array([1 if b == 1 else -1 for b in s_bits])
-        
-        # 5. 根据 PRX 公式 (3) 计算哈密顿量能量
-        # E = -I0 * ( 0.5 * sum(J_ij * m_i * m_j) + sum(h_i * m_i) )
-        # 注意：矩阵对角线为 0，所以 0.5 * m.T @ J @ m 完美等价于上三角两两耦合之和
-        energy_coupling = 0.5 * np.dot(m, np.dot(J, m))
-        energy_bias = np.dot(h, m)
-        
-        # 整体带负号
-        total_energy = (energy_coupling + energy_bias)
-        
-        # 记录逻辑状态 (用于直观展示，将 -1 转换为 0，1 保持 1)
-        logic_bits = [1 if val == 1 else 0 for val in m]
-        logic_str = "".join(map(str, logic_bits))
-        
-        results.append({
-            'Binary_State (m0 m1 m4 m2 m3)': logic_str,
-            'Spin_Configuration': m.tolist(),
-            'Coupling_Energy': energy_coupling,
-            'Bias_Energy': energy_bias,
-            'Total_Hamiltonian (E)': total_energy
+
+    J = np.array([
+        [ 0,  1, -2,  0,  0],  # m0 (In1)
+        [ 1,  0, -2,  0,  0],  # m1 (In2)
+        [-2, -2,  0,  1, -2],  # m4 (Aux)
+        [ 0,  0,  1,  0, -2],  # m2 (In3)
+        [ 0,  0, -2, -2,  0]   # m3 (Out)
+    ])
+
+    # 按照辅助位 m4 的两种可能（0 和 1）划分的子空间容器
+    aux_cases = ["0", "1"]
+    subspace_data = {case: [] for case in aux_cases}
+
+    # 存储 32 种微观状态的大总表
+    big_table_data = []
+
+    # ==========================================
+    # 2. 遍历 32 种微观自旋状态 (5位二进制生成)
+    # ==========================================
+    for b in range(32):
+        m = np.zeros(5, dtype=int)
+        m[0] = (b >> 0) & 1  # m0 (In1)
+        m[1] = (b >> 1) & 1  # m1 (In2)
+        m[2] = (b >> 2) & 1  # m4 (Aux)
+        m[3] = (b >> 3) & 1  # m2 (In3)
+        m[4] = (b >> 4) & 1  # m3 (Out)
+
+        # 转换为 Ising 系统的自旋轴状态 s (-1, +1)
+        s = 2 * m - 1
+
+        # 计算经典哈密顿量公式总能量: E = h·s + 0.5 * s·J·s^T
+        energy = np.dot(h, s) + 0.5 * np.dot(s, np.dot(J, s))
+
+        # 构建可读的字符串标签
+        bit_str = f"{m[0]} {m[1]} {m[2]} {m[3]} {m[4]}"
+        macro_str = f"{m[0]}{m[1]}{m[3]}{m[4]}"  # 提取映射到系统的 In1 In2 In3 Out
+        aux_str = f"{m[2]}"                        # 提取 m4 辅助位状态
+
+        # 级联逻辑完整解合法性校验
+        cond1 = (m[0] & m[1]) == m[2]    # 第一级 AND：m0 & m1 == m4
+        cond2 = (m[2] & m[3]) == m[4]    # 第二级 AND：m4 & m2 == m3
+        is_match = "✔ 基态解" if (cond1 and cond2) else "✘ 非法态"
+
+        # 载入 32 种物理大总表
+        big_table_data.append({
+            "Index": b,
+            "Bit_String": bit_str,
+            "Macro_State": macro_str,
+            "Energy": round(energy, 1),
+            "Status": is_match
         })
-    
-    # 6. 转换为 DataFrame 方便排序和可视化分析
-    df = pd.DataFrame(results)
-    df = df.sort_values(by='Total_Hamiltonian (E)').reset_index(drop=True)
-    
-    # 7. 打印输出分析
-    print("=========================================================================")
-    print("                     Ising System Energy Landscape                       ")
-    print("=========================================================================")
-    print(df[['Binary_State (m0 m1 m4 m2 m3)', 'Total_Hamiltonian (E)']].to_string())
-    
-    # 8. 自动找出能量最低的基态 (Ground States)
-    min_energy = df['Total_Hamiltonian (E)'].min()
-    ground_states = df[df['Total_Hamiltonian (E)'] == min_energy]
-    
-    print("\n=========================================================================")
-    print(f"检测到的系统基态 (最低哈密顿量 E = {min_energy}):")
-    print("=========================================================================")
-    for _, row in ground_states.iterrows():
-        b_str = row['Binary_State (m0 m1 m4 m2 m3)']
-        print(f"状态: {b_str} -> 输入 [m0, m1, m2] = [{b_str[0]}, {b_str[1]}, {b_str[3]}], 辅助位 m4 = {b_str[2]}, 输出 m3 = {b_str[4]}")
+
+        # 按 m4 的具体状态分发给对应的能量分布子空间
+        subspace_data[aux_str].append({
+            "MacroState_In123Out": macro_str,
+            "Hamiltonian_Energy": round(energy, 1),
+            "Logic_Status": is_match
+        })
+
+    # 设置 pandas 打印配置，使其能完美对齐显示
+    pd.set_option('display.max_rows', 40)
+    pd.set_option('display.width', 1000)
+    pd.set_option('display.colheader_justify', 'center')
+
+    # ==========================================
+    # 3. 规范化报表打印输出
+    # ==========================================
+    print("\n" + "="*75)
+    print("                    32 种全状态微观物理能量大总表")
+    print("="*75)
+    df_big = pd.DataFrame(big_table_data)
+    print(df_big.to_string(index=False))
+
+    # 循环提取子空间，并对宏观逻辑态做标准的文本递增排序 (0000 -> 1111)
+    for case_name in aux_cases:
+        print("\n" + "="*65)
+        print(f"  辅助位配置 m4 = {case_name} 的哈密顿量子分布空间（标准升序）")
+        print("="*65)
+        
+        # 转换为 DataFrame 并依据宏观态字符排序
+        df_sub = pd.DataFrame(subspace_data[case_name])
+        df_sub_sorted = df_sub.sort_values(by="MacroState_In123Out", ascending=True)
+        
+        print(df_sub_sorted.to_string(index=False))
 
 if __name__ == "__main__":
-    calculate_ising_energy_landscape()
+    main()

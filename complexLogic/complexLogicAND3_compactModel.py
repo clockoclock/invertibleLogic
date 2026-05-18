@@ -27,6 +27,7 @@ def run_cascaded_statistical_analysis(num_samples=1000, T_start=5.0, T_end=0.1, 
         (0, 1): 1.0, (0, 4): -2.0, (1, 4): -2.0,  # Gate A: m0,m1 -> m4
         (4, 2): 1.0, (4, 3): -2.0, (2, 3): -2.0   # Gate B: m4,m2 -> m3
     }
+    # 此处耦合系数只取了上三角部分，计算能量时不用取1/2，直接按照定义计算即可。
     
     # 16个状态的描述 (用于图表展示)
     state_labels = [f"{i:04b}" for i in range(16)]

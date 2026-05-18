@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Created by: WHH
 # Date: 2026-05-14
 # Description: 3-input AND 逻辑门（引入辅助位）单次模拟退火轨迹详细记录与分析
-# Result：功能异常，待分析
+# Result：单条退火路径分析
 
 # 绘图数据记录
 history_steps = []

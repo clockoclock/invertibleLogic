@@ -1,33 +1,46 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
+from matplotlib.lines import Line2D
 
 # Information
 # Created by: WHH
 # Date: 2026-05-18
-# Description: 级联 3 输入 AND 门在固定输出端 (Clamped Output) 下的反向退火统计分析
-# 输出钳位0/1可调
+# Description: 6节点 Copy-Link 拓扑 3输入 AND 门在固定输出端 (Clamped Output) 下的逆向退火统计分析
 
-def run_clamped_output_analysis(fixed_out_val=1, num_samples=1000, T_start=5.0, T_end=0.1, steps=1000):
+def run_clamped_output_analysis_copylink(fixed_out_val=0, num_samples=1000, T_start=5.0, T_end=0.1, steps=1000):
     """
     fixed_out_val: 固定输出的值，0 或 1。
-    - 如果固定为 1：理想情况下，输入只有一种可能，即 111。
-    - 如果固定为 0：理想情况下，输入有 7 种可能（000, 001, 010, 011, 100, 101, 110）。
+    - 如果固定为 1：理想情况下，输入只有一种可能，即 111 (对应 1111)。
+    - 如果固定为 0：理想情况下，输入有 7 种可能（0000, 0010, 0100, 0110, 1000, 1010, 1100）。
     """
-    # --- 级联堆叠拓扑参数 ---
-    # 节点对应关系: 0:In1, 1:In2, 2:In3, 3:Out, 4:Aux
-    h = [-1.0, -1.0, -1.0, 2.0, 1.0]
-    j = {
-        (0, 1): 1.0, (0, 4): -2.0, (1, 4): -2.0,  # Gate A: m0,m1 -> m4
-        (4, 2): 1.0, (4, 3): -2.0, (2, 3): -2.0   # Gate B: m4,m2 -> m3
-    }
-    
+    # ==========================================
+    # 1. 参数配置 (6节点 Copy-Link 方案)
+    # ==========================================
+    # 节点对应关系: 0:m0(In1), 1:m1(In2), 2:m4a, 3:m4b, 4:m2(In3), 5:m3(Out)
+    h = np.array([-1.0, -1.0, 2.0, -1.0, -1.0, 2.0])
+
+    J = np.zeros((6, 6))
+    # Gate A (m0, m1 -> m4a)
+    J[0, 1] = J[1, 0] = 1.0
+    J[0, 2] = J[2, 0] = -2.0
+    J[1, 2] = J[2, 1] = -2.0
+
+    # Gate B (m4b, m2 -> m3)
+    J[3, 4] = J[4, 3] = 1.0
+    J[3, 5] = J[5, 3] = -2.0
+    J[4, 5] = J[5, 4] = -2.0
+
+    # Copy-Link (m4a <-> m4b 强耦合约束)
+    J[2, 3] = J[3, 2] = -2.0
+
     # 转换逻辑固定值到物理自旋空间 (0 -> -1, 1 -> 1)
     fixed_out_spin = 1 if fixed_out_val == 1 else -1
     
     # 全局 16 种宏观逻辑状态标签
     state_labels = [f"{i:04b}" for i in range(16)]
-    # 全局合法基态
+    
+    # 全局合法基态列表 (对应真值表合法解)
     global_valid_states = [0, 2, 4, 6, 8, 10, 12, 15]
     
     # 根据固定输出筛选当前约束下的“合法预期解”
@@ -38,40 +51,39 @@ def run_clamped_output_analysis(fixed_out_val=1, num_samples=1000, T_start=5.0, 
         current_expected_states = [0, 2, 4, 6, 8, 10, 12]  # 后缀为0的那些合法态
 
     def get_energy(s):
-        e = sum(h[i] * s[i] for i in range(5))
-        for (u, v), val in j.items():
-            e += val * s[u] * s[v]
-        return e
+        """计算 6 节点全局哈密顿量总能量"""
+        return np.dot(h, s) + 0.5 * np.dot(s, np.dot(J, s))
 
     final_results = []
 
     print(f"开始模拟退火... 约束条件: 输出端 Out 强制固定为 = {fixed_out_val} (共进行 {num_samples} 轮独立实验)")
     
     for n in range(num_samples):
-        # 1. 初始化状态
-        s = np.random.choice([-1, 1], size=5)
-        # 强行硬约束：初始化时就将输出位(索引3)设为目标值
-        s[3] = fixed_out_spin
+        # 1. 初始化状态 (6节点)
+        s = np.random.choice([-1, 1], size=6)
+        # 强行硬约束：初始化时就将输出位(索引5, 即m3)设为目标物理自旋值
+        s[5] = fixed_out_spin
         
         # 2. 退火演化
         for step in range(steps):
             # 动态线性降温
             T = T_start + (T_end - T_start) * (step / steps)
             
-            # 关键修改：随机选择翻转节点时，排除已被固定的输出端节点 3
-            # 只在 0, 1, 2 (输入位) 和 4 (辅助位) 之间随机选点
-            i = np.random.choice([0, 1, 2, 4])
+            # 关键修改：随机选择翻转节点时，排除已被固定的输出端节点 5
+            # 只在 0, 1, 2, 3, 4 (输入位与内部复制辅助位) 之间随机选点
+            i = np.random.choice([0, 1, 2, 3, 4])
             
             s_flip = s.copy()
             s_flip[i] *= -1
             dE = get_energy(s_flip) - get_energy(s)
             
-            if dE < 0 or (np.random.rand() < np.exp(-dE/T)):
+            if dE < 0 or (T > 1e-11 and np.random.rand() < np.exp(-dE/T)):
                 s = s_flip
         
-        # 3. 记录最终冻结时的宏观逻辑状态
-        state_bits = ((s[:4] + 1) // 2).astype(int)
-        state_int = int("".join(map(str, state_bits)), 2)
+        # 3. 提取最终冻结时的宏观逻辑状态位 (剥离内部辅助位差异)
+        m = ((s + 1) // 2).astype(int)
+        # 映射为 4 位宏观态二进制: m0 m1 m4 m3 -> In1 In2 In3 Out
+        state_int = (m[0] << 3) | (m[1] << 2) | (m[4] << 1) | m[5]
         final_results.append(state_int)
 
     # 4. 统计处理
@@ -80,7 +92,7 @@ def run_clamped_output_analysis(fixed_out_val=1, num_samples=1000, T_start=5.0, 
     
     # 5. 控制台精确数据报表
     print("\n" + "="*75)
-    print(f"      【Clamped Out = {fixed_out_val}】 反向可逆求解概率与均匀性统计")
+    print(f"    【6节点 Copy-Link 模型 Out = {fixed_out_val}】 反向可逆求解概率与均匀性统计")
     print("="*75)
     print(f"{'宏观逻辑状态 (In123 Out)':<24} | {'收敛频次':<10} | {'实际概率':<10} | {'解的性质'}")
     print("-"*75)
@@ -108,7 +120,6 @@ def run_clamped_output_analysis(fixed_out_val=1, num_samples=1000, T_start=5.0, 
 
     # 6. 可视化柱状图展示
     plt.figure(figsize=(12, 7), dpi=100)
-    # 颜色配置：符合当前约束的解显示为明亮的绿色，被固定排除或非法的显示为红色/浅灰色
     colors = []
     for i in range(16):
         if i in current_expected_states:
@@ -127,11 +138,10 @@ def run_clamped_output_analysis(fixed_out_val=1, num_samples=1000, T_start=5.0, 
                      f'{int(height)}', ha='center', va='bottom', fontsize=10)
 
     plt.xticks(range(16), state_labels, rotation=45, family='monospace')
-    plt.title(f"Clamped Output (Out = {fixed_out_val}) Energy Landscape Exploration\n({num_samples} Annealing Runs, Cascaded 3-Input AND)", fontsize=13)
+    plt.title(f"Clamped Output (Out = {fixed_out_val}) Energy Landscape Exploration\n({num_samples} Annealing Runs, 6-Node Copy-Link AND)", fontsize=13)
     plt.ylabel("Observed Frequency (Times)", fontsize=12)
     plt.xlabel("System Logic State (In1 In2 In3 Out)", fontsize=12)
     
-    from matplotlib.lines import Line2D
     legend_elements = [
         Line2D([0], [0], color='#2ecc71', lw=4, label=f'Expected Valid States under Out={fixed_out_val}'),
         Line2D([0], [0], color='#bdc3c7', lw=4, label='Valid States Blocked by Clamping'),
@@ -142,10 +152,6 @@ def run_clamped_output_analysis(fixed_out_val=1, num_samples=1000, T_start=5.0, 
     plt.tight_layout()
     plt.show()
 
-# =========================================================================
-# 您可以通过修改下面的参数来分别观察不同的状态分布：
-# fixed_out_val = 1 : 查看输出固定为 1 时的收敛情况
-# fixed_out_val = 0 : 查看输出固定为 0 时的反向多解收敛分布
-# =========================================================================
 if __name__ == "__main__":
-    run_clamped_output_analysis(fixed_out_val=1, num_samples=1000)
+    # 可在此处修改固定输出的值 (0 或 1) 以进行不同的逆向验证
+    run_clamped_output_analysis_copylink(fixed_out_val=0, num_samples=1000)

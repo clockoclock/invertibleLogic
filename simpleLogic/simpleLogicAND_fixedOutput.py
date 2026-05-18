@@ -84,4 +84,4 @@ h_params = [-1, -1, 2]
 j_params = {(0, 1): 1, (0, 2): -2, (1, 2): -2}
 
 # 执行逆向验证
-verify_inverse_ising(h_params, j_params, clamp_node=2, clamp_val=0, T_start=1.0, T_end=0.1, steps=1000)
+verify_inverse_ising(h_params, j_params, clamp_node=2, clamp_val=1, T_start=1.0, T_end=0.1, steps=1000)
