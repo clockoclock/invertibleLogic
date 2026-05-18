@@ -12,8 +12,7 @@ invertible logic verified by python
 |  | 2026.5.14 | complexLogicAND3_annealingTrace.py <br> complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py | Upload and organize into the folder *annealingTrace* | WHH |
 | v1.1 | 2026.5.18 | Note: The original annealing strategy failed to execute and is now uniformly fixed | The involved folders include *simleLogic*, *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_compactModel.py <bar> complexLogicAND3_compactModel_hamilitonian.py <bar> complexLogicAND3_compactModel_annealingTrace.py <bar> complexLogicAND3_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
-|  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize 
-into the folder *complexLogic* and *annealingTrace* | WHH |
+|  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some details about context.
@@ -113,3 +112,5 @@ Upload 4 files (complexLogicAND3_auxiliaryConnect_hamilitonian.py, complexLogicA
 20. complexLogicAND3_auxiliaryConnect_fixedOutput.py
 
     This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1
+
+## 20226.5.18
