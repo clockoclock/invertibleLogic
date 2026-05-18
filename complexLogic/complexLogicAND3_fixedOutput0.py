@@ -101,4 +101,4 @@ def verify_3in_and_inverse(num_samples=1000, T_start=1.0, T_end=0.1， steps=250
     print(f"逆向计算成功率: {(num_samples - total_illegal) / num_samples * 100:.2f}%")
     print(f"{'='*65}")
 
-verify_3in_and_inverse()
+verify_3in_and_inverse(num_samples=1000, T_start=1.0, T_end=0.1， steps=1000)

@@ -8,7 +8,12 @@ import itertools
 # Description: Ising 模型参数求解器 - 3 输入 AND 逻辑门（引入辅助位）逆向验证，固定输出为1
 # Result：功能正确
 
-def verify_3in_and_inverse_fixed_1(num_samples=1000, T=0.5):
+# 修订05-18
+# Created by: WHH
+# 原代码温度恒定，未能执行退火过程，现添加初始和终止温度参数，并在每次蒙特卡洛步骤中逐渐降低温度，以更真实地模拟退火过程。
+# 通过调整 T_start 和 T_end 参数，用户可以观察不同退火速率对系统状态分布的影响，从而更深入地理解退火过程在 Ising 模型中的作用。
+
+def verify_3in_and_inverse_fixed_1(num_samples=1000, T_start=5.0, T_end=0.1, steps=250):
     # 1. 载入 image_be8300.png 的参数配置
     h = [-2, -2, -2, 10, 6]  # [In1, In2, In3, Out, Aux]
     
@@ -37,7 +42,9 @@ def verify_3in_and_inverse_fixed_1(num_samples=1000, T=0.5):
         s[clamp_node] = clamp_val_phys
         
         # 退火演化
-        for _ in range(250):
+        for step in range(steps):
+            # 线性降温计划
+            T = T_start + (T_end - T_start) * (step / steps)
             for i in range(5):
                 if i == clamp_node: continue
                 

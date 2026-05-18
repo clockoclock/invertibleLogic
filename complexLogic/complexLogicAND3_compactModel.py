@@ -22,12 +22,9 @@ from collections import Counter
 def run_cascaded_statistical_analysis(num_samples=1000, T_start=5.0, T_end=0.1, steps=1000):
     # --- 级联堆叠参数 (带能量梯度补偿) ---
     # 节点索引: 0:In1, 1:In2, 2:In3, 3:Out, 4:Aux
-    # 权重逻辑: 后级(Gate B)强度是前级(Gate A)的 1.5 倍
     h = [-1.0, -1.0, -1.0, 2.0, 1.0]  # h4 = 1.0(A_out) + -1.5(B_in) AND2和AND1同等耦合强度
-    # h = [-1.0, -1.0, -1.5, 3.0, 0.5]  # h4 = 1.0(A_out) + -1.5(B_in) AND2和AND1差1.5倍耦合强度
     j = {
         (0, 1): 1.0, (0, 4): -2.0, (1, 4): -2.0,  # Gate A: m0,m1 -> m4
-        # (4, 2): 1.5, (4, 3): -3.0, (2, 3): -3.0   # Gate B: m4,m2 -> m3
         (4, 2): 1.0, (4, 3): -2.0, (2, 3): -2.0   # Gate B: m4,m2 -> m3
     }
     
@@ -43,6 +40,7 @@ def run_cascaded_statistical_analysis(num_samples=1000, T_start=5.0, T_end=0.1, 
         return e
 
     final_results = []
+    detailed_results = [] # 新增：用于记录包含辅助位的 5-bit 微观状态
 
     print(f"Starting {num_samples} annealing runs...")
     for n in range(num_samples):
@@ -62,32 +60,62 @@ def run_cascaded_statistical_analysis(num_samples=1000, T_start=5.0, T_end=0.1, 
             if dE < 0 or (T > 1e-11 and np.random.rand() < np.exp(-dE/T)):
                 s = s_flip
         
-        # 记录最后一步的逻辑位 (前4位)
-        state_int = int("".join(map(str, ((s[:4] + 1) // 2).astype(int))), 2)
+        # 记录最后一步的逻辑位 (前4位: In1 In2 In3 Out)
+        state_bits = ((s + 1) // 2).astype(int)
+        state_int = int("".join(map(str, state_bits[:4])), 2)
         final_results.append(state_int)
+        
+        # 记录完整的 5 位微观状态字符串 (m0 m1 m4 m2 m3)
+        # 映射顺序与您提供的 J 矩阵对齐
+        m0, m1, m2, m3, m4 = state_bits[0], state_bits[1], state_bits[2], state_bits[3], state_bits[4]
+        micro_state_str = f"{m0}{m1}{m4}{m2}{m3}"
+        detailed_results.append(micro_state_str)
 
-    # 2. 统计频次
-    counts = Counter(final_results)
-    total_counts = [counts.get(i, 0) for i in range(16)]
+    # ==========================================
+    # 新增功能：精确统计每次退火的最终状态与概率分析
+    # ==========================================
+    counts_macro = Counter(final_results)
+    counts_micro = Counter(detailed_results)
     
-    # 3. 绘图展示
+    print("\n" + "="*65)
+    print("         3 输入 AND 门宏观逻辑状态收敛概率统计 (4-bit)")
+    print("="*65)
+    print(f"{'逻辑状态(In123 Out)':<22} | {'收敛次数':<10} | {'收敛概率':<10} | {'状态性质'}")
+    print("-"*65)
+    
+    total_valid_observed = 0
+    for i in range(16):
+        c = counts_macro.get(i, 0)
+        prob = (c / num_samples) * 100
+        is_valid = "✔ 合法基态" if i in valid_states else "✘ 非法高能态"
+        if i in valid_states:
+            total_valid_observed += c
+        print(f"      {i:04b}          |    {c:<7} |   {prob:>5.1f}%   | {is_valid}")
+        
+    print("-"*65)
+    print(f"总合法状态（真值表捕获率）: {total_valid_observed / num_samples * 100:.2f}%")
+    print(f"理想状态下，各合法状态的独占目标概率应接近: {100 / len(valid_states):.2f}%")
+    print("="*65)
+
+    # 2. 统计频次 (保持原绘图代码所需变量)
+    total_counts = [counts_macro.get(i, 0) for i in range(16)]
+    
+    # 3. 绘图展示 (完全保持原有可视化功能不变)
     plt.figure(figsize=(12, 7), dpi=100)
     colors = ['#2ecc71' if i in valid_states else '#e74c3c' for i in range(16)]
     
     bars = plt.bar(range(16), total_counts, color=colors, alpha=0.8, edgecolor='black', linewidth=1)
     
-    # 添加数值标签
     for bar in bars:
         height = bar.get_height()
         plt.text(bar.get_x() + bar.get_width()/2., height + 5,
                  f'{int(height)}', ha='center', va='bottom', fontsize=10)
 
     plt.xticks(range(16), state_labels, rotation=45, family='monospace')
-    plt.title(f"Statistical Distribution of 1000 Annealing Runs\n(Cascaded 3-Input AND Model)", fontsize=14)
+    plt.title(f"Statistical Distribution of {num_samples} Annealing Runs\n(Cascaded 3-Input AND Model)", fontsize=14)
     plt.ylabel("Frequency (Times Observed)", fontsize=12)
     plt.xlabel("System Logic State (In1 In2 In3 Out)", fontsize=12)
     
-    # 绘制辅助线说明
     from matplotlib.lines import Line2D
     legend_elements = [Line2D([0], [0], color='#2ecc71', lw=4, label='Legal States (Energy Minima)'),
                        Line2D([0], [0], color='#e74c3c', lw=4, label='Illegal States (High Energy)')]
