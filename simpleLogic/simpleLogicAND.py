@@ -52,7 +52,7 @@ def verify_ising_gate_with_counts(h, j_dict, num_samples=1000, T=1.0, steps=100)
     valid_states = [(0,0,0), (0,1,0), (1,0,0), (1,1,1)]
     
     print(f"{'='*50}")
-    print(f"统计分析结果 (总样本数: {num_samples}, 温度: {T})")
+    print(f"统计分析结果 (总样-m pip --version本数: {num_samples}, 温度: {T})")
     print(f"{'状态 (A B C)':<15} | {'出现次数':<10} | {'占比':<8} | {'是否合法'}")
     print("-" * 50)
     
@@ -78,4 +78,4 @@ def verify_ising_gate_with_counts(h, j_dict, num_samples=1000, T=1.0, steps=100)
 h_params = [-1, -1, 2] 
 j_params = {(0, 1): 1, (0, 2): -2, (1, 2): -2}
 
-verify_ising_gate_with_counts(h_params, j_params, num_samples=1000, T=1.0)
+verify_ising_gate_with_counts(h_params, j_params, num_samples=10000, T=5.0)
