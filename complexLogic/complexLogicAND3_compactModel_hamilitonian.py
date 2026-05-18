@@ -1,6 +1,16 @@
 import numpy as np
 import pandas as pd
 
+# Information
+# Created by: WHH
+# Date: 2026-05-18
+# Description: 计算级联堆叠的 3 输入 AND 逻辑门的 Ising 模型能量景观
+# 该代码实现了一个基于 Ising 模型的能量景观计算器，针对级联堆叠的 3 输入 AND 逻辑门设计。通过定义节点索引、构建耦合矩阵 J 和偏置向量 h，生成所有可能的自旋配置，并计算每个配置的哈密顿量能量。最终输出每个状态的二进制表示和对应的总能量，并自动识别系统的基态（最低能量状态）。用户可以通过分析输出结果来理解系统的能量分布和稳定状态。
+# 注意：该代码依赖于 NumPy 和 Pandas 库，需要提前安装（pip install numpy pandas）才能运行。
+# Result: 功能正常，能够正确计算并展示级联堆叠的 3 输入 AND 逻辑门的能量景观，并且成功识别出系统的基态。
+
+# 注意：该哈密顿量计算公式没有取负号
+
 def calculate_ising_energy_landscape():
     # 1. 定义节点索引映射 (按照矩阵顺序对齐)
     # 节点: m0, m1, m4, m2, m3
