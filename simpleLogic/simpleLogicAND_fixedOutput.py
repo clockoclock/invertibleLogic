@@ -9,7 +9,12 @@ import collections
 # 修改变量为clamp_val，可以修改为0,1，分别验证输出为0和1的情况，对应自旋节点的物理值为-1和1
 # Result：功能验证正确，输出符合预期的逻辑约束
 
-def verify_inverse_ising(h, j_dict, clamp_node=2, clamp_val=1, num_samples=1000, T=1):
+# 修订05-18
+# Created by: WHH
+# 原代码温度恒定，未能执行退火过程，现添加初始和终止温度参数，并在每次蒙特卡洛步骤中逐渐降低温度，以更真实地模拟退火过程。
+# 通过调整 T_start 和 T_end 参数，用户可以观察不同退火速率对系统状态分布的影响，从而更深入地理解退火过程在 Ising 模型中的作用。
+
+def verify_inverse_ising(h, j_dict, clamp_node=2, clamp_val=1, num_samples=1000, T_start=1.0, T_end=0.1, steps=100):
     """
     h: 偏置 [h0, h1, h2]
     j_dict: 耦合 {(0,1): v, (0,2): v, (1,2): v}
@@ -32,7 +37,10 @@ def verify_inverse_ising(h, j_dict, clamp_node=2, clamp_val=1, num_samples=1000,
         s[clamp_node] = v_clamp
         
         # 2. 迭代演化 (Gibbs Sampling)
-        for _ in range(100): 
+        for step in range(steps):
+            # 线性降温计划
+            T = T_start + (T_end - T_start) * (step / steps)
+            
             for i in range(3):
                 # 跳过被固定的节点，它不翻转
                 if i == clamp_node: continue
@@ -76,4 +84,4 @@ h_params = [-1, -1, 2]
 j_params = {(0, 1): 1, (0, 2): -2, (1, 2): -2}
 
 # 执行逆向验证
-verify_inverse_ising(h_params, j_params, clamp_node=2, clamp_val=1, T=0.8)
+verify_inverse_ising(h_params, j_params, clamp_node=2, clamp_val=0, T_start=1.0, T_end=0.1, steps=1000)
