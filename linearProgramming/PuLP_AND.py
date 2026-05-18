@@ -13,6 +13,11 @@ import pulp
 # 注意：该代码依赖于 PuLP 库，需要提前安装（pip install pulp）才能运行。
 # Result: 功能正常。根据输入的逻辑门类型，能够输出正确的参数配置
 
+# 修订05-18
+# Created by: WHH
+# 可以通过修改energy_gap参数来调整合法状态和非法状态之间的能量差距，从而影响模型的鲁棒性和可行解的空间。
+# 可以通过修改lowBound和upBound参数来调整h和j的取值范围，以适应不同的物理实现或优化需求。
+
 def solve_ising_bipolar(logic_gate='AND', energy_gap=1):
     prob = pulp.LpProblem(f"Ising_{logic_gate}_Bipolar", pulp.LpMinimize)
 
