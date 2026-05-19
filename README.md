@@ -13,7 +13,7 @@ invertible logic verified by python
 | v1.1 | 2026.5.18 | Note: The original annealing strategy failed to execute and is now uniformly fixed | The involved folders include *simleLogic*, *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_compactModel.py <bar> complexLogicAND3_compactModel_hamilitonian.py <bar> complexLogicAND3_compactModel_annealingTrace.py <bar> complexLogicAND3_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
-|  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR2_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
+|  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR2_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
 
 
 ## 2026.5.13
