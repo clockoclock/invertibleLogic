@@ -13,6 +13,8 @@ invertible logic verified by python
 | v1.1 | 2026.5.18 | Note: The original annealing strategy failed to execute and is now uniformly fixed | The involved folders include *simleLogic*, *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_compactModel.py <bar> complexLogicAND3_compactModel_hamilitonian.py <bar> complexLogicAND3_compactModel_annealingTrace.py <bar> complexLogicAND3_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
+|  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR2_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
+
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some details about context.
@@ -113,4 +115,21 @@ Upload 4 files (complexLogicAND3_auxiliaryConnect_hamilitonian.py, complexLogicA
 
     This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1
 
-## 20226.5.18
+## 2026.5.19
+Upload 4 files (complexLogicXOR2.py, complexLogicXOR2_hamilitonian.py, complexLogicXOR3_auxiliaryConnect.py and complexLogicXOR3_auxiliaryConnect_fixedOutput.py). Here are some details about the context
+
+21. complexLogicXOR2.py
+
+    This file implements the 2-inputs XOR gate through 2-bits auxiliary bit connection.
+
+22. complexLogicXOR2_hamilitonian.py
+
+    This file is used to calculate the hamilitionian of proposed structure.
+
+23. complexLogicXOR3_auxiliaryConnect.py
+
+    This file implements the 3-inputs XOR gate through overlap the output of the first XOR gate and the input of the second XOR gate. And 10 spins are used in this structure. 
+
+24. complexLogicXOR3_auxiliaryConnect_fixedOutput.py
+
+    This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1
