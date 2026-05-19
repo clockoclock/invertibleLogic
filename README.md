@@ -132,4 +132,4 @@ Upload 4 files (complexLogicXOR2.py, complexLogicXOR2_hamilitonian.py, complexLo
 
 24. complexLogicXOR3_auxiliaryConnect_fixedOutput.py
 
-    This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1
+    This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1.
