@@ -13,7 +13,7 @@ invertible logic verified by python
 | v1.1 | 2026.5.18 | Note: The original annealing strategy failed to execute and is now uniformly fixed | The involved folders include *simleLogic*, *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_compactModel.py <bar> complexLogicAND3_compactModel_hamilitonian.py <bar> complexLogicAND3_compactModel_annealingTrace.py <bar> complexLogicAND3_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
-|  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR2_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
+|  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR3_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
 
 
 ## 2026.5.13
@@ -79,7 +79,9 @@ Upload 3 files (complexLogicAND3_auxiliaryConnect.py, complexLogicAND3_annealing
 
 13. complexLogicAND3_auxiliaryConnect_annealingTraceAnalysis.py
 
-    Trace analysis of complexLogicAND3_auxiliaryConnect.py. Something may be wrong in this file
+    Trace analysis of complexLogicAND3_auxiliaryConnect.py. 
+    *Something may be wrong in this file.   --2026.05.14 WHH*
+    *The file outputs the single annealing trace for better analysis. No problem.   --2026.05.19 WHH* 
 
 ## 2026.5.18
 Upload 4 files (complexLogicAND3_compactModel.py, complexLogicAND3_compactModel_hamilitonian.py, complexLogicAND3_compactModel_annealingTrace.py and complexLogicAND3_compactModel_fixedOutput.py). Here are some details about the context
@@ -118,6 +120,8 @@ Upload 4 files (complexLogicAND3_auxiliaryConnect_hamilitonian.py, complexLogicA
 ## 2026.5.19
 Upload 4 files (complexLogicXOR2.py, complexLogicXOR2_hamilitonian.py, complexLogicXOR3_auxiliaryConnect.py and complexLogicXOR3_auxiliaryConnect_fixedOutput.py). Here are some details about the context
 
+*Note: The performance of cascade XOR3 by two XOR2 is unclear.  --2026.05.19 WHH*
+
 21. complexLogicXOR2.py
 
     This file implements the 2-inputs XOR gate through 2-bits auxiliary bit connection.
@@ -133,3 +137,5 @@ Upload 4 files (complexLogicXOR2.py, complexLogicXOR2_hamilitonian.py, complexLo
 24. complexLogicXOR3_auxiliaryConnect_fixedOutput.py
 
     This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1.
+
+## 2026.5.19
