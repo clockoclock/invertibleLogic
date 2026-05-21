@@ -154,4 +154,4 @@ def run_clamped_output_analysis_copylink(fixed_out_val=0, num_samples=1000, T_st
 
 if __name__ == "__main__":
     # 可在此处修改固定输出的值 (0 或 1) 以进行不同的逆向验证
-    run_clamped_output_analysis_copylink(fixed_out_val=0, num_samples=1000)
+    run_clamped_output_analysis_copylink(fixed_out_val=1, num_samples=1000)
