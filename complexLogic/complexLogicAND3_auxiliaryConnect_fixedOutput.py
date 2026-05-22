@@ -32,7 +32,7 @@ def run_clamped_output_analysis_copylink(fixed_out_val=0, num_samples=1000, T_st
     J[4, 5] = J[5, 4] = -2.0
 
     # Copy-Link (m4a <-> m4b 强耦合约束)
-    J[2, 3] = J[3, 2] = -2.0
+    J[2, 3] = J[3, 2] = -1.5
 
     # 转换逻辑固定值到物理自旋空间 (0 -> -1, 1 -> 1)
     fixed_out_spin = 1 if fixed_out_val == 1 else -1
