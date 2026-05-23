@@ -15,7 +15,7 @@ invertible logic verified by python
 |  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR3_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
 |  | 2026.5.19 | complexLogicXOR4_auxiliaryConnect.py | Upload and organize into the folder *complexLogic* | WHH |
-| v1.2 | 2026.5.23 | Proposed Dynamic Copy-link Annealing Strategy <bar>  | The involved folders include *simleLogic*, *complexLogic* and *annealingTrace* | WHH |
+| v1.2 | 2026.5.23 | Proposed Dynamic Copy-link Annealing Strategy <bar> complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux.py <bar> complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux_fixedOutput.py | The involved folders include *DynamicCopylink* | WHH |
 
 
 ## 2026.5.13
