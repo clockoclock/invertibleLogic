@@ -15,6 +15,7 @@ invertible logic verified by python
 |  | 2026.5.18 | complexLogicAND3_auxiliaryConnect_hamilitonian.py <bar> complexLogicAND3_auxiliaryConnect_annealingTrace.py <bar> complexLogicAND3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* and *annealingTrace* | WHH |
 |  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR3_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
 |  | 2026.5.19 | complexLogicXOR4_auxiliaryConnect.py | Upload and organize into the folder *complexLogic* | WHH |
+| v1.2 | 2026.5.23 | Proposed Dynamic Copy-link Annealing Strategy <bar>  | The involved folders include *simleLogic*, *complexLogic* and *annealingTrace* | WHH |
 
 
 ## 2026.5.13
@@ -147,4 +148,17 @@ Upload 1 files (complexLogicXOR4_auxiliaryConnect.py). Here are some details abo
 25. complexLogicXOR4_auxiliaryConnect.py
 
     This file implements the 4-inputs XOR gate through 4-bits auxiliary bit connection.
+
+## 2026.5.23
+Upload 2 files (complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux.py and complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux_fixedOutput.py). Here are some details about the context
+
+25. complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux.py
+
+    This file verifies the feasibility of the proposed dynamic copy-link strategy.
+
+26. complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux_fixedOutput.py
+
+    This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1.
+
+
 
