@@ -44,8 +44,8 @@ def simulated_annealing_piecewise_dynamic(
     J_base[0,4] = J_base[4,0] = -2.0
     J_base[1,4] = J_base[4,1] = -2.0
     # Gate B 内部约束 (m4b, m2 -> m3)
-    J_base[4,2] = J_base[2,4] = 1.0
-    J_base[4,3] = J_base[3,4] = -2.0
+    J_base[5,2] = J_base[2,5] = 1.0
+    J_base[5,3] = J_base[3,5] = -2.0
     J_base[2,3] = J_base[3,2] = -2.0
 
     # 计算分段线性时间轴的硬件开关切换点
@@ -109,9 +109,9 @@ print("="*70)
 SIM_CONFIG = {
     'steps': 200,                    # 退火总轮次
     'iters_per_step': 8,             # 单次温度下的自旋翻转尝试次数
-    'T_start': 50.0,                 # 初始高温
+    'T_start': 5.0,                 # 初始高温
     'T_end': 0.1,                   # 终止低温
-    'boundaries': (0.3, 0.4, 0.3),   # 三段区间占比划分 (3:4:3)
+    'boundaries': (0.0, 1.0, 0.0),   # 三段区间占比划分 (3:4:3)
     'J_aux_stages': (0.2, 2.0, 5.0)  # 第一段(J_min), 第二段(J_mid), 第三段(J_max)
 }
 

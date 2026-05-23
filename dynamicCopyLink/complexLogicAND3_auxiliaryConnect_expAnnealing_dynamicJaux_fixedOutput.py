@@ -22,10 +22,10 @@ def simulated_annealing_pure_algorithm(
     target_out=None,       # 算法控制：None(自主寻优), 0(固定输出为0), 1(固定输出为1)
     steps=200,             # 退火总轮次（温度衰减次数）
     iters_per_step=10,     # 每轮温度下的单次自旋翻转迭代次数
-    T_start=50.0,          # 初始高温
+    T_start=5.0,          # 初始高温
     T_end=0.1,            # 终止低温
     boundaries=(0, 1.0, 0),   # 三段区间占比划分
-    J_aux_stages=(0.2, 50, 5.0)  # 每一段对应的辅助节点耦合强度
+    J_aux_stages=(0.2, 2.0, 20.0)  # 每一段对应的辅助节点耦合强度
 ):
     n = 6
     s = np.random.choice([-1, 1], size=n)  # 随机初始状态
@@ -38,11 +38,13 @@ def simulated_annealing_pure_algorithm(
 
     # 初始化基础静态耦合矩阵（子模块内部硬核固定）
     J_base = np.zeros((6, 6))
+    # Gate A 内部约束 (m0, m1 -> m4a)
     J_base[0,1] = J_base[1,0] = 1.0
     J_base[0,4] = J_base[4,0] = -2.0
     J_base[1,4] = J_base[4,1] = -2.0
-    J_base[4,2] = J_base[2,4] = 1.0
-    J_base[4,3] = J_base[3,4] = -2.0
+    # Gate B 内部约束 (m4b, m2 -> m3)
+    J_base[5,2] = J_base[2,5] = 1.0
+    J_base[5,3] = J_base[3,5] = -2.0
     J_base[2,3] = J_base[3,2] = -2.0
 
     # 计算分段线性时间轴的切换点
@@ -52,8 +54,6 @@ def simulated_annealing_pure_algorithm(
     # 计算指数退火衰减系数 alpha
     T = T_start
     alpha = (T_end / T_start) ** (1.0 / (steps - 1))
-    # 线性退火
-    decay = (T_end / T_start) ** (1.0 / steps)
     
     # 开始退火轮次循环
     for step in range(steps):
@@ -91,9 +91,7 @@ def simulated_annealing_pure_algorithm(
                 s = s_flip
                 
         # 温度按照指数轨迹衰减
-        # T *= alpha
-        # 线性退火
-        T *= decay
+        T *= alpha
         
     return s
 
@@ -111,12 +109,12 @@ TARGET_OUTPUT_MODE = 1  # <--- 在这里修改你想验证的算法模式
 
 SIM_CONFIG = {
     'target_out': TARGET_OUTPUT_MODE,
-    'steps': 1000,
-    'iters_per_step': 1,
-    'T_start': 10.0,
+    'steps': 200,
+    'iters_per_step': 8,
+    'T_start': 5.0,
     'T_end': 0.1,
-    'boundaries': (0.0, 1.0, 0.0),
-    'J_aux_stages': (0.2, 1.5, 5.0)
+    'boundaries': (0.3, 0.4, 0.3),
+    'J_aux_stages': (0.2, 2.0, 5.0)
 }
 
 # 依据模式定义算法期待的合法状态集

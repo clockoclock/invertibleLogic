@@ -17,6 +17,10 @@ from collections import Counter
 # 添加对于系统状态分布的统计分析，记录每个状态的出现频率，并通过柱状图展示系统在不同阶段的状态分布情况。
 # 通过调整 num_samples、steps 和降温计划，用户可以观察不同条件下系统的行为和合法状态的捕获率，从而更深入地理解 Ising 模型在逻辑门实现中的应用。
 
+# 修订05-22
+# Created by: WHH
+# 原系数设置存在问题，m5未参与计算，现已纠正
+
 # ==========================================
 # 1. 参数配置 (完全保持原全对称、等强度 Copy-Link 方案不变)
 # ==========================================
@@ -30,8 +34,8 @@ J[0,1] = J[1,0] = 1.0
 J[0,4] = J[4,0] = -2.0
 J[1,4] = J[4,1] = -2.0
 # Gate B (m4b, m2 -> m3)
-J[4,2] = J[2,4] = 1.0
-J[4,3] = J[3,4] = -2.0
+J[5,2] = J[2,5] = 1.0
+J[5,3] = J[3,5] = -2.0
 J[2,3] = J[3,2] = -2.0
 # Copy-Link (m4a <-> m4b) 强一致性约束
 J[4,5] = J[5,4] = -2.0
@@ -62,7 +66,7 @@ def simulated_annealing_global_energy(h, J, steps=1000, T_start=10.0, T_end=0.1)
     n = len(h)
     s = np.random.choice([-1, 1], size=n)  # 随机初始状态
     T = T_start
-    decay = (T_end / T_start) ** (1.0 / steps)
+    decay = (T_end / T_start) ** (1.0 / (steps - 1))
     
     for _ in range(steps):
         i = np.random.randint(n)
