@@ -111,10 +111,10 @@ SIM_CONFIG = {
     'target_out': TARGET_OUTPUT_MODE,
     'steps': 200,
     'iters_per_step': 8,
-    'T_start': 5.0,
+    'T_start': 50.0,
     'T_end': 0.1,
-    'boundaries': (0.3, 0.4, 0.3),
-    'J_aux_stages': (0.2, 2.0, 5.0)
+    'boundaries': (0.0, 1.0, 0.0),
+    'J_aux_stages': (0.2, 0.0, 5.0)
 }
 
 # 依据模式定义算法期待的合法状态集

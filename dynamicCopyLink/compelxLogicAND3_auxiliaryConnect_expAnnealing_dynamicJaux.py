@@ -109,10 +109,10 @@ print("="*70)
 SIM_CONFIG = {
     'steps': 200,                    # 退火总轮次
     'iters_per_step': 8,             # 单次温度下的自旋翻转尝试次数
-    'T_start': 5.0,                 # 初始高温
+    'T_start': 50.0,                 # 初始高温
     'T_end': 0.1,                   # 终止低温
-    'boundaries': (0.0, 1.0, 0.0),   # 三段区间占比划分 (3:4:3)
-    'J_aux_stages': (0.2, 2.0, 5.0)  # 第一段(J_min), 第二段(J_mid), 第三段(J_max)
+    'boundaries': (0.3, 0.4, 0.3),   # 三段区间占比划分 (3:4:3)
+    'J_aux_stages': (0.2, 0.5, 5.0)  # 第一段(J_min), 第二段(J_mid), 第三段(J_max)
 }
 
 for _ in range(num_runs):
