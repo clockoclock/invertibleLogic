@@ -16,7 +16,7 @@ invertible logic verified by python
 |  | 2026.5.19 | complexLogicXOR2.py <bar> complexLogicXOR3_hamilitonian.py <bar> complexLogicXOR3_auxiliaryConnect.py <bar> complexLogicXOR3_auxiliaryConnect_fixedOutput.py | Upload and organize into the folder *complexLogic* | ZJC, WHH |
 |  | 2026.5.19 | complexLogicXOR4_auxiliaryConnect.py | Upload and organize into the folder *complexLogic* | WHH |
 | v1.2 | 2026.5.23 | Proposed Dynamic Copy-link Annealing Strategy <bar> complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux.py <bar> complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux_fixedOutput.py | The involved folders include *DynamicCopylink* | WHH |
-
+| v1.3 | 2026.6.3 | mul22Logic.py | The involved folders include *computeLogic* | ZJC, WHH |
 
 ## 2026.5.13
 Upload 2 files (simpleLogicAND.py and simpleLogicAND_fixedOutput.py). Here are some details about context.
@@ -160,5 +160,9 @@ Upload 2 files (complexLogicAND3_auxiliaryConnect_expAnnealing_dynamicJaux.py an
 
     This file verifies the reversibility of the logic in reverse by fixing the output to 0 or 1.
 
+## 2026.6.3
+Upload 1 files (mul22Logic.py). Here are some details about the context
 
+27. mul22Logic.py
 
+    2x2 bits multiplier.
